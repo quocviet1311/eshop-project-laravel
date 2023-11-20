@@ -62,15 +62,15 @@ class CategoryController extends Controller
     {
         // dd($id, $this->category, $this->category->find($id));
         // dd($id);
-        // $category = $this->category->find($id);
+        $category = $this->category->find($id);
 
-        // dd($category, $id);
-        $this->category->find($id)->update([
-            'name' => $request->name,
-            'parent_id' => $request->parent_id,
-            'slug' => \Illuminate\Support\Str::slug($request->name)
-        ]);
-        return redirect()->route('categories.index');
+        dd($category, $id);
+        // $this->category->find($id)->update([
+        //     'name' => $request->name,
+        //     'parent_id' => $request->parent_id,
+        //     'slug' => \Illuminate\Support\Str::slug($request->name)
+        // ]);
+        // return redirect()->route('categories.index');
     }
 
     public function getCategory($parentId)
