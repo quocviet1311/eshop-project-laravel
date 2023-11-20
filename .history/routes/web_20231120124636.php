@@ -36,13 +36,13 @@ Route::prefix('categories')->group(function () {
         'as' => 'categories.edit',
         'uses' => 'App\Http\Controllers\CategoryController@edit'
     ]);
-    Route::post('/update/{id}', [
-        'as' => 'categories.update',
-        'uses' => 'App\Http\Controllers\CategoryController@update'
-    ]);
     Route::post('/store', [
         'as' => 'categories.store',
         'uses' => 'App\Http\Controllers\CategoryController@store'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'categories.delete',
+        'uses' => 'App\Http\Controllers\CategoryController@delete'
     ]);
     Route::get('/delete/{id}', [
         'as' => 'categories.delete',

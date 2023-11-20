@@ -54,7 +54,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->category->find($id);
-        dd($category, $id);
+        dd($category);
         // $htmlOption = $this->getCategory($category->parent_id);
         // return view('category.edit', compact('category', 'htmlOption'));
     }
@@ -64,7 +64,7 @@ class CategoryController extends Controller
         // dd($id);
         $category = $this->category->find($id);
 
-        dd($category, $id);
+        dd($category);
         // $this->category->find($id)->update([
         //     'name' => $request->name,
         //     'parent_id' => $request->parent_id,

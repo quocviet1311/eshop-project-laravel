@@ -54,23 +54,17 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->category->find($id);
-        dd($category, $id);
-        // $htmlOption = $this->getCategory($category->parent_id);
-        // return view('category.edit', compact('category', 'htmlOption'));
+        $htmlOption = $this->getCategory($category->parent_id);
+        return view('category.edit', compact('category', 'htmlOption'));
     }
     public function update($id, Request $request)
     {
-        // dd($id, $this->category, $this->category->find($id));
-        // dd($id);
-        $category = $this->category->find($id);
-
-        dd($category, $id);
-        // $this->category->find($id)->update([
-        //     'name' => $request->name,
-        //     'parent_id' => $request->parent_id,
-        //     'slug' => \Illuminate\Support\Str::slug($request->name)
-        // ]);
-        // return redirect()->route('categories.index');
+        $this->category->find($id)->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'slug' => \Illuminate\Support\Str::slug($request->name),
+            return redirect()->route('categories.index');
+        ]);
     }
 
     public function getCategory($parentId)

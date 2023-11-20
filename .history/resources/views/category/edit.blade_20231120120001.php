@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Thêm Danh Mục</title>
+    <title>Sửa Danh Mục</title>
 @endsection
 @section('content')
     <div class="content-wrapper">

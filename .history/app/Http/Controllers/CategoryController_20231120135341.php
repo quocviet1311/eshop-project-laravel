@@ -64,7 +64,7 @@ class CategoryController extends Controller
         // dd($id);
         $category = $this->category->find($id);
 
-        dd($category, $id);
+        dd($category);
         // $this->category->find($id)->update([
         //     'name' => $request->name,
         //     'parent_id' => $request->parent_id,

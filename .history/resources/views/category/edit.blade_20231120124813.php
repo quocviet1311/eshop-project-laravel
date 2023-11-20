@@ -1,20 +1,21 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Thêm Danh Mục</title>
+    <title>Sửa Danh Mục</title>
 @endsection
 @section('content')
     <div class="content-wrapper">
-        @include('partials.content-header', ['name' => 'Category', 'key' => 'Add'])
+        @include('partials.content-header', ['name' => 'Category', 'key' => 'Edit'])
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="{{ route('categories.store') }}" method="POST">
+                        <form action="{{ route('categories.update', ['id =>']) }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label>Tên danh mục</label>
-                                <input type="text" class="form-control" name="name" placeholder="Nhập tên danh mục">
+                                <input type="text" value="{{ $category->name }}" class="form-control" name="name"
+                                    placeholder="Nhập tên danh mục">
 
                             </div>
                             <div class="form-group">

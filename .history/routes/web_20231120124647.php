@@ -36,9 +36,9 @@ Route::prefix('categories')->group(function () {
         'as' => 'categories.edit',
         'uses' => 'App\Http\Controllers\CategoryController@edit'
     ]);
-    Route::post('/update/{id}', [
-        'as' => 'categories.update',
-        'uses' => 'App\Http\Controllers\CategoryController@update'
+    Route::get('/edit/{id}', [
+        'as' => 'categories.edit',
+        'uses' => 'App\Http\Controllers\CategoryController@edit'
     ]);
     Route::post('/store', [
         'as' => 'categories.store',

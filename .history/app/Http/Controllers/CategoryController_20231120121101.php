@@ -16,7 +16,7 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        $htmlOption = $this->getCategory($parentId = '');
+        $htmlOption = $this->getCategory();
         return view('category.add', compact('htmlOption'));
     }
     // Ví dụ đệ quy
@@ -53,31 +53,16 @@ class CategoryController extends Controller
     }
     public function edit($id)
     {
+        $htmlOption = $this->getCategory();
         $category = $this->category->find($id);
-        dd($category, $id);
-        // $htmlOption = $this->getCategory($category->parent_id);
-        // return view('category.edit', compact('category', 'htmlOption'));
-    }
-    public function update($id, Request $request)
-    {
-        // dd($id, $this->category, $this->category->find($id));
-        // dd($id);
-        $category = $this->category->find($id);
-
-        dd($category, $id);
-        // $this->category->find($id)->update([
-        //     'name' => $request->name,
-        //     'parent_id' => $request->parent_id,
-        //     'slug' => \Illuminate\Support\Str::slug($request->name)
-        // ]);
-        // return redirect()->route('categories.index');
+        return view('category.edit', compact('category', 'htmlOption'));
     }
 
-    public function getCategory($parentId)
+    public function getCategory()
     {
         $data = $this->category::all();
         $recursive = new Recursive($data);
-        $htmlOption = $recursive->categoryRecursive($parentId);
+        $htmlOption = $recursive->categoryRecursive();
         return $htmlOption;
     }
 
