@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Components\Recursive;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+
+class CategoryController extends Controller
+{
+    private $category;
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+    public function create()
+    {
+        $htmlOption = $this->getCategory($parentId = '');
+        return view('category.add', compact('htmlOption'));
+    }
+    // Ví dụ đệ quy
+    // foreach ($data as $value) {
+    //     if ($value['parent_id'] == 0) {
+    //         echo "<option value='$value->id'>$value->name</option>";
+    //         foreach ($data as $value2) {
+    //             if ($value2['parent_id'] == $value['id']) {
+    //                 echo "<option value='$value2->id'>--$value2->name</option>";
+    //                 foreach ($data as $value3) {
+    //                     if ($value3['parent_id'] == $value2['id']) {
+    //                         echo "<option value='$value3->id'>----$value3->name</option>";
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    public function index()
+    {
+        $categories = $this->category->latest()->cursorPaginate(5);
+        return view('category.index', compact('categories'));
+    }
+    public function store(Request $request)
+    {
+        $this->category->create([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'slug' => \Illuminate\Support\Str::slug($request->name)
+
+        ]);
+        return redirect()->route('categories.index');
+    }
+    public function edit($id)
+    {
+        $category = $this->category->find($id);
+        // dd($category, $id);
+        $htmlOption = $this->getCategory($category->parent_id);
+        return view('category.edit', compact('category', 'htmlOption'));
+    }
+    public function update($id, Request $request)
+    {
+        // dd($id, $this->category, $this->category->find($id));
+        // dd($id);
+        // $category = $this->category->find($id);
+
+        // dd($category, $id);
+        $this->category->find($id)->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'slug' => \Illuminate\Support\Str::slug($request->name)
+        ]);
+        return redirect()->route('categories.index');
+    }
+
+    public function getCategory($parentId)
+    {
+        $data = $this->category::all();
+        $recursive = new Recursive($data);
+        $htmlOption = $recursive->categoryRecursive($parentId);
+        return $htmlOption;
+    }
+
+    public function delete($id)
+    {
+        $category = $this->category->with('children')->find($id);
+        if (!$category) {
+            Session::flash('error', 'Danh mục không tồn tại.');
+            return redirect()->back();
+        }
+        if ($category->children()->count() > 0) {
+            Session::flash('error', 'Không thể xóa danh mục cha có danh mục con.');
+            return redirect()->back();
+        }
+        Session::flash('success', 'Danh mục và tất cả danh mục con đã được xóa mềm thành công.');
+
+        $category->delete();
+        return redirect()->route('categories.index');
+    }
+}
