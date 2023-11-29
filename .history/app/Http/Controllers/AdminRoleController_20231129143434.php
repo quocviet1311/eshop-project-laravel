@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Role;
+use Illuminate\Http\Request;
+
+class AdminRoleController extends Controller
+{
+    private $role;
+    private $permission;
+    public function __construct(Role $role)
+    {
+        $this->role = $role;
+        $this->permission = $permission;
+
+    }
+    public function index()
+    {
+        $roles = $this->role->latest()->cursorPaginate(10);
+        return view('admin.role.index', compact('roles'));
+    }
+
+    public function create()
+    {
+        $permission = $
+        return view('admin.role.add');
+    }
+}
