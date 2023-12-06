@@ -276,15 +276,16 @@ Route::prefix('admin')->group(function () {
     Route::prefix('order')->group(function () {
         Route::get('/', [
             'as' => 'order.index',
-            'uses' => 'App\Http\Controllers\AdminOrderController@index'
+            'uses' => 'App\Http\Controllers\AdminRoleController@index',
+            'middleware' => 'can:role-list'
         ]);
         Route::get('/edit/{id}', [
             'as' => 'order.edit',
-            'uses' => 'App\Http\Controllers\AdminOrderController@edit'
+            'uses' => 'App\Http\Controllers\AdminPermissionController@edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'order.update',
-            'uses' => 'App\Http\Controllers\AdminOrderController@update'
+            'uses' => 'App\Http\Controllers\AdminPermissionController@update'
         ]);
     });
 });

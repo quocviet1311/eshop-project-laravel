@@ -273,18 +273,5 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 
-    Route::prefix('order')->group(function () {
-        Route::get('/', [
-            'as' => 'order.index',
-            'uses' => 'App\Http\Controllers\AdminOrderController@index'
-        ]);
-        Route::get('/edit/{id}', [
-            'as' => 'order.edit',
-            'uses' => 'App\Http\Controllers\AdminOrderController@edit'
-        ]);
-        Route::post('/update/{id}', [
-            'as' => 'order.update',
-            'uses' => 'App\Http\Controllers\AdminOrderController@update'
-        ]);
-    });
+    Route::prefix('')
 });

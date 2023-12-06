@@ -274,17 +274,26 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('order')->group(function () {
-        Route::get('/', [
-            'as' => 'order.index',
-            'uses' => 'App\Http\Controllers\AdminOrderController@index'
+
+        Route::get('/create', [
+            'as' => 'permissions.create',
+            'uses' => 'App\Http\Controllers\AdminPermissionController@createPermission'
+        ]);
+        Route::post('/store', [
+            'as' => 'permissions.store',
+            'uses' => 'App\Http\Controllers\AdminPermissionController@store'
         ]);
         Route::get('/edit/{id}', [
-            'as' => 'order.edit',
-            'uses' => 'App\Http\Controllers\AdminOrderController@edit'
+            'as' => 'permissions.edit',
+            'uses' => 'App\Http\Controllers\AdminPermissionController@edit'
         ]);
         Route::post('/update/{id}', [
-            'as' => 'order.update',
-            'uses' => 'App\Http\Controllers\AdminOrderController@update'
+            'as' => 'permissions.update',
+            'uses' => 'App\Http\Controllers\AdminPermissionController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'permissions.delete',
+            'uses' => 'App\Http\Controllers\AdminPermissionController@delete'
         ]);
     });
 });
